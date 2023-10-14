@@ -4,32 +4,30 @@
 
 namespace HistoricoEscolar.Migrations
 {
-    public partial class CriacaoDaTabela10 : Migration
+    public partial class AlterandoTabelaHistórico3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "NomeDoCurso",
-                table: "Cursos",
-                type: "nvarchar(100)",
-                maxLength: 100,
+                name: "Situacao",
+                table: "Historicos",
+                type: "nvarchar(10)",
+                maxLength: 10,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(75)",
-                oldMaxLength: 75);
+                oldType: "nvarchar(max)");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "NomeDoCurso",
-                table: "Cursos",
-                type: "nvarchar(75)",
-                maxLength: 75,
+                name: "Situacao",
+                table: "Historicos",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+                oldType: "nvarchar(10)",
+                oldMaxLength: 10);
         }
     }
 }

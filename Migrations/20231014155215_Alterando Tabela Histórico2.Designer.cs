@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HistoricoEscolar.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231013184329_CriacaoDaTabela")]
-    partial class CriacaoDaTabela
+    [Migration("20231014155215_Alterando Tabela Histórico2")]
+    partial class AlterandoTabelaHistórico2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,24 +32,25 @@ namespace HistoricoEscolar.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AlunoId"), 1L, 1);
 
-                    b.Property<string>("CursoId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CursoId")
+                        .HasColumnType("int(2)");
 
-                    b.Property<int>("CursoId1")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Matricula")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Matricula")
+                        .HasColumnType("int(10)");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Polo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("AlunoId");
 
-                    b.HasIndex("CursoId1");
+                    b.HasIndex("CursoId");
 
                     b.ToTable("Alunos");
                 });
@@ -64,11 +65,12 @@ namespace HistoricoEscolar.Migrations
 
                     b.Property<string>("NomeDoCurso")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("CursoId");
 
-                    b.ToTable("Curso");
+                    b.ToTable("Cursos");
                 });
 
             modelBuilder.Entity("HistoricoEscolar.Models.Disciplina", b =>
@@ -79,15 +81,12 @@ namespace HistoricoEscolar.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DisciplinaId"), 1L, 1);
 
-                    b.Property<int?>("CursoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NomeDaDisciplina")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("DisciplinaId");
-
-                    b.HasIndex("CursoId");
 
                     b.ToTable("Disciplinas");
                 });
@@ -100,29 +99,34 @@ namespace HistoricoEscolar.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HistoricoId"), 1L, 1);
 
-                    b.Property<int>("AlunoId")
+                    b.Property<int?>("AlunoId")
                         .HasColumnType("int");
 
-                    b.Property<double>("AvaliacaoPresencial")
-                        .HasColumnType("float");
+                    b.Property<decimal>("AvaliacaoPresencial")
+                        .HasColumnType("decimal(2,2)");
 
-                    b.Property<double>("AvalicaoOnline")
-                        .HasColumnType("float");
+                    b.Property<decimal>("AvalicaoOnline")
+                        .HasColumnType("decimal(2,2)");
 
-                    b.Property<int>("DisciplinaId")
+                    b.Property<int?>("DisciplinaId")
                         .HasColumnType("int");
 
                     b.Property<double>("Media")
-                        .HasColumnType("float");
+                        .HasColumnType("float")
+                        .HasColumnName("Media");
 
-                    b.Property<double>("PIM")
-                        .HasColumnType("float");
+                    b.Property<decimal>("PIM")
+                        .HasColumnType("decimal(2,2)");
 
                     b.Property<string>("Periodo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Situacao")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Situacao");
 
                     b.HasKey("HistoricoId");
 
@@ -137,42 +141,26 @@ namespace HistoricoEscolar.Migrations
                 {
                     b.HasOne("HistoricoEscolar.Models.Curso", "Curso")
                         .WithMany()
-                        .HasForeignKey("CursoId1")
+                        .HasForeignKey("CursoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Curso");
                 });
 
-            modelBuilder.Entity("HistoricoEscolar.Models.Disciplina", b =>
-                {
-                    b.HasOne("HistoricoEscolar.Models.Curso", null)
-                        .WithMany("Disciplinas")
-                        .HasForeignKey("CursoId");
-                });
-
             modelBuilder.Entity("HistoricoEscolar.Models.Historico", b =>
                 {
                     b.HasOne("HistoricoEscolar.Models.Aluno", "Aluno")
                         .WithMany()
-                        .HasForeignKey("AlunoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AlunoId");
 
                     b.HasOne("HistoricoEscolar.Models.Disciplina", "Disciplina")
                         .WithMany()
-                        .HasForeignKey("DisciplinaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DisciplinaId");
 
                     b.Navigation("Aluno");
 
                     b.Navigation("Disciplina");
-                });
-
-            modelBuilder.Entity("HistoricoEscolar.Models.Curso", b =>
-                {
-                    b.Navigation("Disciplinas");
                 });
 #pragma warning restore 612, 618
         }

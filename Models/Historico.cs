@@ -15,23 +15,27 @@ public class Historico
     public string? Periodo { get; set; }
 
     [Required]
-    [Column(TypeName ="decimal(2,2)")]
+    [Column(TypeName = "decimal(10,2)")]
     public double AvalicaoOnline { get; set; }
 
     [Required]
-    [Column(TypeName = "decimal(2,2)")]
-    public double AvaliacaoPresencial { get;set; }
+    [Column(TypeName = "decimal(10,2)")]
+    public double AvaliacaoPresencial { get; set; }
 
     [Required]
-    [Column(TypeName = "decimal(2,2)")]
+    [Column(TypeName = "decimal(10,2)")]
     public double PIM { get; set; }
 
-    [Column(TypeName = "decimal(2,2)")]
     public double Media { get; set; }
 
+    [StringLength(10)]
+    public string? Situacao { get; set; }
+
     [Required]
-    [StringLength (10)]
-    public string? Situacao { get; set;}
+    public int AlunoId { get; set; }
+
+    [Required]
+    public int DisciplinaId {get; set; }
 
     [JsonIgnore]
     public Aluno? Aluno { get; set; }

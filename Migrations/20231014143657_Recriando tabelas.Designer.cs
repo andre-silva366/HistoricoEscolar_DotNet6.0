@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HistoricoEscolar.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231013224920_CriacaoDaTabela7")]
-    partial class CriacaoDaTabela7
+    [Migration("20231014143657_Recriando tabelas")]
+    partial class Recriandotabelas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,10 +63,10 @@ namespace HistoricoEscolar.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CursoId"), 1L, 1);
 
-                    b.Property<string>("NomeCurso")
+                    b.Property<string>("NomeDoCurso")
                         .IsRequired()
-                        .HasMaxLength(75)
-                        .HasColumnType("nvarchar(75)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("CursoId");
 
@@ -83,8 +83,8 @@ namespace HistoricoEscolar.Migrations
 
                     b.Property<string>("NomeDaDisciplina")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("DisciplinaId");
 
@@ -133,7 +133,7 @@ namespace HistoricoEscolar.Migrations
 
                     b.HasIndex("DisciplinaId");
 
-                    b.ToTable("Histórico");
+                    b.ToTable("Historicos");
                 });
 
             modelBuilder.Entity("HistoricoEscolar.Models.Aluno", b =>

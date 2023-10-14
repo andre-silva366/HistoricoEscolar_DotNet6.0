@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HistoricoEscolar.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231013212417_CriacaoDaTabela5")]
-    partial class CriacaoDaTabela5
+    [Migration("20231014155557_Alterando Tabela Histórico3")]
+    partial class AlterandoTabelaHistórico3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,10 +33,10 @@ namespace HistoricoEscolar.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AlunoId"), 1L, 1);
 
                     b.Property<int>("CursoId")
-                        .HasColumnType("int");
+                        .HasColumnType("int(2)");
 
                     b.Property<int>("Matricula")
-                        .HasColumnType("int");
+                        .HasColumnType("int(10)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -65,8 +65,8 @@ namespace HistoricoEscolar.Migrations
 
                     b.Property<string>("NomeDoCurso")
                         .IsRequired()
-                        .HasMaxLength(75)
-                        .HasColumnType("nvarchar(75)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("CursoId");
 
@@ -83,8 +83,8 @@ namespace HistoricoEscolar.Migrations
 
                     b.Property<string>("NomeDaDisciplina")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("DisciplinaId");
 
@@ -111,8 +111,9 @@ namespace HistoricoEscolar.Migrations
                     b.Property<int?>("DisciplinaId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Media")
-                        .HasColumnType("decimal(2,2)");
+                    b.Property<double>("Media")
+                        .HasColumnType("float")
+                        .HasColumnName("Media");
 
                     b.Property<decimal>("PIM")
                         .HasColumnType("decimal(2,2)");
@@ -125,7 +126,8 @@ namespace HistoricoEscolar.Migrations
                     b.Property<string>("Situacao")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("Situacao");
 
                     b.HasKey("HistoricoId");
 
@@ -133,7 +135,7 @@ namespace HistoricoEscolar.Migrations
 
                     b.HasIndex("DisciplinaId");
 
-                    b.ToTable("Histórico");
+                    b.ToTable("Historicos");
                 });
 
             modelBuilder.Entity("HistoricoEscolar.Models.Aluno", b =>
